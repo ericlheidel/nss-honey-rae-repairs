@@ -1,44 +1,67 @@
-// import logo from './logo.svg';
-import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from "react"
+import { getAllTickets } from "./services/ticketService.js"
+import "./App.css"
 
 export const App = () => {
-  const [count, setCount] = useState(0) // [stateVariable, setterFunction]
+  const [allTickets, setAllTickets] = useState([]) //[stateVariable, setterFunction]
+  const [showEmergencyOnly, setShowEmergencyOnly] = useState(false) //[stateVariable, setterFunction]
+  const [filteredTickets, setFilteredTickets] = useState([]) // [stateVariable, setterFunction]
 
-  const handleBtnClick = () => {
-    setCount(count + 1)
-    console.log(count)
-  }
+  useEffect(() => { // asynchronously fetch all tickets
+    getAllTickets().then((ticketsArray) => {
+      setAllTickets(ticketsArray) 
+      console.log("tickets set!")
+    })
+  }, []) //ONLY on initial render of component -> BECAUSE the array within it is empty
 
-    return (
-      <>
-        <h1>Hello!</h1>
-        <div>This is amazing!</div>
-        <button onClick={handleBtnClick} className='btn-secondary'>
-          Click Me!
-        </button>
-        <div>Count: {count}</div>
-      </>
-    )
-  }
+  useEffect(() => {
+    if (showEmergencyOnly /* === true */) {
+      const emergencyTickets = allTickets.filter(
+        (ticket) => ticket.emergency /* === true */
+      )
+      setFilteredTickets(emergencyTickets)
+    } else {
+      setFilteredTickets(allTickets)
+    }
+  }, [showEmergencyOnly, allTickets]) // This function will run WHENEVER showEmergencyOnly of allTickets CHANGES
 
-export default App;
-
-
-
-/*{ (<div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+  return (
+    <div className="tickets-container">
+      <h2>Tickets</h2>
+      <div>
+        <button
+          className="filter-btn btn-primary"
+          onClick={() => (
+            setShowEmergencyOnly(true)
+          )}
         >
-          Learn React
-        </a>
-      </header>
-    </div>) }*/
+          Emergency
+        </button>
+        <button
+          className="filter-btn btn-info"
+          onClick={() => {
+            setShowEmergencyOnly(false)
+          }}
+        >Show All
+        </button>
+      </div>
+      <article className="tickets">
+        {filteredTickets.map(
+          (ticket) => {
+            return (
+              <section className="ticket" key={ticket.id}>
+                <header className="ticket-info">{ticket.id}</header>
+                <div>{ticket.description}</div>
+                <footer>
+                  <div>
+                    <div className="ticket-info">emergency</div>
+                    <div>{ticket.emergency ? "yes" : "no"}</div>
+                  </div>
+                </footer>
+              </section>
+            )
+          })}
+        </article>
+    </div>
+  )
+}
