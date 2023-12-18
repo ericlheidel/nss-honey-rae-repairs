@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getAllTickets } from "../../services/ticketService.js"
 import "./Tickets.css"
+import { Ticket } from "./Ticket.js"
 
 export const TicketList = () => {
   const [allTickets, setAllTickets] = useState([]) //[stateVariable, setterFunction]
@@ -23,12 +24,12 @@ export const TicketList = () => {
     } else {
       setFilteredTickets(allTickets)
     }
-  }, [showEmergencyOnly, allTickets]) // This function will run WHENEVER showEmergencyOnly of allTickets CHANGES
+  }, [showEmergencyOnly, allTickets]) // This function will run WHENEVER showEmergencyOnly or allTickets CHANGES
 
   return (
     <div className="tickets-container">
       <h2>Tickets</h2>
-      <div>
+      <div className="filter-bar">
         <button
           className="filter-btn btn-primary"
           onClick={() => (
@@ -44,22 +45,16 @@ export const TicketList = () => {
           }}
         >Show All
         </button>
+        <input
+          type="text"
+          placeholder="Search Tickets"
+          className="ticket-search"
+          />
       </div>
       <article className="tickets">
         {filteredTickets.map(
-          (ticket) => {
-            return (
-              <section className="ticket" key={ticket.id}>
-                <header className="ticket-info">{ticket.id}</header>
-                <div>{ticket.description}</div>
-                <footer>
-                  <div>
-                    <div className="ticket-info">emergency</div>
-                    <div>{ticket.emergency ? "yes" : "no"}</div>
-                  </div>
-                </footer>
-              </section>
-            )
+          (ticketObj) => {
+            return <Ticket ticket={ticketObj} name="Joe" key={ticketObj.id}/>
           })}
         </article>
     </div>
