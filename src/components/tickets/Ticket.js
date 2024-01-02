@@ -12,14 +12,15 @@ export const Ticket = ({ ticket }) => {
 	}, [])
 
 	useEffect(() => {
-		const foundEmployee = employees.find(employee => employee.id === ticket.employeeTickets[0]?.employeeId
-			)
-			setAssignedEmployee(foundEmployee)
+		const foundEmployee = employees.find(
+			(employee) => employee.id === ticket.employeeTickets[0]?.employeeId
+		)
+		setAssignedEmployee(foundEmployee)
 	}, [employees, ticket])
 
 	return (
-		<section className="ticket">
-			<header className="ticket-info">{ticket.id}</header>
+		<section className="ticket" key={ticket.id}>
+			<header className="ticket-info">#{ticket.id}</header>
 			<div>{ticket.description}</div>
 			<footer>
 				<div>
