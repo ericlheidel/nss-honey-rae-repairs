@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import {
-	getAllEmployees,
 	getEmployeeByUserId,
+	getEmployeesAndTickets,
 } from "../../services/employeeService.js"
-import { getAllEmployeeTickets } from "../../services/ticketService.js"
 
 export const EmployeeDetails = () => {
 	const [employee, setEmployee] = useState({})
 	const { employeeId } = useParams()
 
-	const [employees, setEmployees] = useState([])
-	const [employeeTickets, setEmployeeTickets] = useState([])
+	// const [employeesAndTickets, setEmployeesAndTickets] = useState([])
 	const [matchingTickets, setMatchingTickets] = useState([])
 
 	useEffect(() => {
@@ -22,16 +20,12 @@ export const EmployeeDetails = () => {
 	}, [employeeId])
 
 	useEffect(() => {
-		getAllEmployees().then((employeesArray) => {
-			setEmployees(employeesArray)
+		getEmployeesAndTickets(employeeId).then((data) => {
+			setMatchingTickets(data[0].employeeTickets.length)
 		})
-	}, [])
+	}, [employeeId])
 
-	useEffect(() => {
-		getAllEmployeeTickets().then((employeeTicketsArray) => {
-			setEmployeeTickets(employeeTicketsArray)
-		})
-	}, [])
+	useEffect(() => {})
 
 	return (
 		<section className="employee">
@@ -50,7 +44,7 @@ export const EmployeeDetails = () => {
 			</div>
 			<div>
 				<p></p>
-				<i>Currently Working on {} Tickets</i>
+				<i>Currently Working on {matchingTickets} Tickets</i>
 			</div>
 		</section>
 	)
