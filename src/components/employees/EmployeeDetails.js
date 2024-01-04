@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import {
-	getEmployeeByUserId,
-	getEmployeeAndTheirTickets,
-} from "../../services/employeeService.js"
+import { getEmployeeByUserId } from "../../services/employeeService.js"
 
 export const EmployeeDetails = () => {
 	const [employee, setEmployee] = useState({})
 	const { employeeId } = useParams()
-
-	const [matchingTickets, setMatchingTickets] = useState([])
 
 	useEffect(() => {
 		getEmployeeByUserId(employeeId).then((data) => {
@@ -17,14 +12,6 @@ export const EmployeeDetails = () => {
 			setEmployee(employeeObj)
 		})
 	}, [employeeId])
-
-	useEffect(() => {
-		getEmployeeAndTheirTickets(employeeId).then((data) => {
-			setMatchingTickets(data[0].employeeTickets.length)
-		})
-	}, [employeeId])
-
-	useEffect(() => {})
 
 	return (
 		<section className="employee">
@@ -43,7 +30,7 @@ export const EmployeeDetails = () => {
 			</div>
 			<div>
 				<p></p>
-				<i>Currently Working on {matchingTickets} Tickets</i>
+				<i>Currently Working on {employee.employeeTickets?.length} Tickets</i>
 			</div>
 		</section>
 	)
