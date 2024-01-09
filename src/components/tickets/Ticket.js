@@ -97,8 +97,8 @@ export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
 					)}
 
 					{/* // !!! NEW WAY OF DOING ***{"" ? "" : ""}***
-					// !!! If currentUser.isStaff === false Then do >THIS<, THEN STOP
-					// !!! LOOK ABOVE FOR ANOTHER EXAMPLE
+							// !!! If currentUser.isStaff === false Then do >THIS<, THEN STOP
+							// !!! LOOK ABOVE FOR ANOTHER EXAMPLE
 					*/}
 
 					{!currentUser.isStaff && (
