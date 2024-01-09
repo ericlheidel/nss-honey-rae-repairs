@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react"
 import { getAllEmployees } from "../../services/employeeService.js"
-import { assignTicket, updateTicket } from "../../services/ticketService.js"
+import {
+	assignTicket,
+	deleteTicket,
+	updateTicket,
+} from "../../services/ticketService.js"
 
 export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
 	const [employees, setEmployees] = useState([])
@@ -48,6 +52,12 @@ export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
 		})
 	}
 
+	const handleDelete = () => {
+		deleteTicket(ticket.id).then(() => {
+			getAndSetTickets()
+		})
+	}
+
 	return (
 		<section className="ticket" key={ticket.id}>
 			<header className="ticket-info">#{ticket.id}</header>
@@ -65,6 +75,10 @@ export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
 				</div>
 				<div className="btn-container">
 					{/* if the logged in user is an employee and there's no employee ticket associated with the service ticket then a button to claim the ticket should display */}
+
+					{/* // !!! currentUser.isStaff && !assignedEmployee && DO >THIS<, THEN STOP
+					 */}
+
 					{currentUser.isStaff && !assignedEmployee ? (
 						<button className="btn btn-secondary" onClick={handleClaim}>
 							Claim
@@ -80,6 +94,17 @@ export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
 						</button>
 					) : (
 						""
+					)}
+
+					{/* // !!! NEW WAY OF DOING ***{"" ? "" : ""}***
+					// !!! If currentUser.isStaff === false Then do >THIS<, THEN STOP
+					// !!! LOOK ABOVE FOR ANOTHER EXAMPLE
+					*/}
+
+					{!currentUser.isStaff && (
+						<button className="btn btn-warning" onClick={handleDelete}>
+							Delete
+						</button>
 					)}
 				</div>
 			</footer>
