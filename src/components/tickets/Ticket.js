@@ -76,7 +76,8 @@ export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
 				<div className="btn-container">
 					{/* if the logged in user is an employee and there's no employee ticket associated with the service ticket then a button to claim the ticket should display */}
 
-					{/* // !!! currentUser.isStaff && !assignedEmployee && DO >THIS<, THEN STOP
+					{/* 
+					// !!! currentUser.isStaff && !assignedEmployee && DO >THIS<, THEN STOP
 					 */}
 
 					{currentUser.isStaff && !assignedEmployee ? (
@@ -96,9 +97,10 @@ export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
 						""
 					)}
 
-					{/* // !!! NEW WAY OF DOING ***{"" ? "" : ""}***
-							// !!! If currentUser.isStaff === false Then do >THIS<, THEN STOP
-							// !!! LOOK ABOVE FOR ANOTHER EXAMPLE
+					{/* 
+					// !!! NEW WAY OF DOING ***{"" ? "" : ""}***
+					// !!! If currentUser.isStaff === false Then do >THIS<, THEN STOP
+					// !!! LOOK ABOVE FOR ANOTHER EXAMPLE
 					*/}
 
 					{!currentUser.isStaff && (
