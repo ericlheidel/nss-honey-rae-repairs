@@ -4,6 +4,12 @@ export const getAllTickets = () => {
 	).then((res) => res.json())
 }
 
+export const getTicketById = (ticket) => {
+	return fetch(`http://localhost:8000/serviceTickets?id=${ticket}`).then(
+		(res) => res.json()
+	)
+}
+
 export const assignTicket = (employeeTicket) => {
 	return fetch(`http://localhost:8000/employeeTickets`, {
 		method: "POST",
@@ -27,5 +33,15 @@ export const updateTicket = (ticket) => {
 export const deleteTicket = (ticketId) => {
 	return fetch(`http://localhost:8000/serviceTickets/${ticketId}`, {
 		method: "DELETE",
+	})
+}
+
+export const createTicket = (ticket) => {
+	return fetch(`http://localhost:8000/serviceTickets`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(ticket),
 	})
 }

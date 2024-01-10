@@ -15,6 +15,12 @@ export const getUserByEmail = (email) => {
 	)
 }
 
+export const getUserById = (userId) => {
+	return fetch(`http://localhost:8000/users?id=${userId}`).then((res) =>
+		res.json()
+	)
+}
+
 export const createUser = (customer) => {
 	return fetch("http://localhost:8000/users", {
 		method: "POST",

@@ -5,10 +5,13 @@ import {
 	deleteTicket,
 	updateTicket,
 } from "../../services/ticketService.js"
+import { useNavigate } from "react-router-dom"
 
 export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
 	const [employees, setEmployees] = useState([])
 	const [assignedEmployee, setAssignedEmployee] = useState({})
+
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		getAllEmployees().then((employeesArray) => {
@@ -104,9 +107,19 @@ export const Ticket = ({ ticket, currentUser, getAndSetTickets }) => {
 					*/}
 
 					{!currentUser.isStaff && (
-						<button className="btn btn-warning" onClick={handleDelete}>
-							Delete
-						</button>
+						<>
+							<button
+								className="btn btn-warning btn-edit"
+								onClick={() => {
+									navigate(`/tickets/edit/${ticket.id}`)
+								}}
+							>
+								Edit
+							</button>
+							<button className="btn btn-warning" onClick={handleDelete}>
+								Delete
+							</button>
+						</>
 					)}
 				</div>
 			</footer>
