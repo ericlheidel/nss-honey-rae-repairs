@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getTicketById, updateTicket } from "../../services/ticketService.js"
 
 export const EditTicketForm = ({ currentUser }) => {

@@ -28,7 +28,6 @@ export const EmployeeForm = ({ currentUser }) => {
 			rate: employee.rate,
 			userId: employee.userId,
 		}
-		console.log(editedEmployee)
 		updateEmployee(editedEmployee).then(() => {
 			navigate(`/employees/${currentUser.id}`)
 		})
